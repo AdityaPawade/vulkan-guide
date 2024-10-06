@@ -1,3 +1,4 @@
+find_package(SDL2 CONFIG REQUIRED)
 
 # Add source to this project's executable.
 add_executable (chapter_1 
@@ -15,4 +16,4 @@ target_include_directories(chapter_1 PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 
 target_link_libraries(chapter_1 vkbootstrap vma glm tinyobjloader imgui stb_image)
 
-target_link_libraries(chapter_1 Vulkan::Vulkan sdl2)
+target_link_libraries(chapter_1 Vulkan::Vulkan SDL2::SDL2)

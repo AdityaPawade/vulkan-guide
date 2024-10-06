@@ -14,7 +14,8 @@
 
 constexpr bool bUseValidationLayers = true;
 
-//we want to immediately abort when there is an error. In normal engines this would give an error message to the user, or perform a dump of state.
+//we want to immediately abort when there is an error.
+//In normal engines this would give an error message to the user, or perform a dump of state.
 using namespace std;
 #define VK_CHECK(x)                                                 \
 	do                                                              \
@@ -55,7 +56,6 @@ void VulkanEngine::init()
 	init_commands();
 
 	init_sync_structures();
-
 
 	//everything went fine
 	_isInitialized = true;
@@ -335,7 +335,8 @@ void VulkanEngine::init_commands()
 {
 	//create a command pool for commands submitted to the graphics queue.
 	//we also want the pool to allow for resetting of individual command buffers
-	VkCommandPoolCreateInfo commandPoolInfo = vkinit::command_pool_create_info(_graphicsQueueFamily, VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT);
+	VkCommandPoolCreateInfo commandPoolInfo = vkinit::command_pool_create_info(
+		_graphicsQueueFamily, VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT);
 
 	VK_CHECK(vkCreateCommandPool(_device, &commandPoolInfo, nullptr, &_commandPool));
 

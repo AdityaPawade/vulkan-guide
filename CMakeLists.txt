@@ -5,8 +5,8 @@ cmake_minimum_required (VERSION 3.8)
 
 project ("vulkan_guide")
 
-
 find_package(Vulkan REQUIRED)
+find_package(SDL2 CONFIG REQUIRED)
 
 add_subdirectory(third_party)
 
@@ -21,13 +21,13 @@ add_subdirectory(chapter-4)
 add_subdirectory(chapter-5)
 find_program(GLSL_VALIDATOR glslangValidator HINTS /usr/bin /usr/local/bin $ENV{VULKAN_SDK}/Bin/ $ENV{VULKAN_SDK}/Bin32/)
 
-
 file(GLOB_RECURSE GLSL_SOURCE_FILES
     "${PROJECT_SOURCE_DIR}/shaders/*.frag"
     "${PROJECT_SOURCE_DIR}/shaders/*.vert"
     "${PROJECT_SOURCE_DIR}/shaders/*.comp"
     )
 
+message(STATUS ${GLSL_VALIDATOR})
 foreach(GLSL ${GLSL_SOURCE_FILES})
   message(STATUS "BUILDING SHADER")
   get_filename_component(FILE_NAME ${GLSL} NAME)
@@ -38,6 +38,7 @@ foreach(GLSL ${GLSL_SOURCE_FILES})
     COMMAND ${GLSL_VALIDATOR} -V ${GLSL} -o ${SPIRV}
     DEPENDS ${GLSL})
   list(APPEND SPIRV_BINARY_FILES ${SPIRV})
+  message(STATUS ${SPIRV})
 endforeach(GLSL)
 
 add_custom_target(

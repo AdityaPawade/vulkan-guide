@@ -811,7 +811,7 @@ void VulkanEngine::load_meshes()
 	//we dont care about the vertex normals
 
 	//load the monkey
-	_monkeyMesh.load_from_obj("../../assets/monkey_smooth.obj");
+	_monkeyMesh.load_from_obj("../../assets/monkey_smooth.obj", "../../assets");
 
 	upload_mesh(_triangleMesh);
 	upload_mesh(_monkeyMesh);

@@ -1,4 +1,5 @@
 find_package(Vulkan REQUIRED)
+find_package(SDL2 REQUIRED)
 
 add_library(vkbootstrap STATIC)
 add_library(glm INTERFACE)
@@ -57,6 +58,6 @@ target_sources(imgui PRIVATE
   imgui/imgui_impl_sdl.cpp
   )
 
-target_link_libraries(imgui PUBLIC Vulkan::Vulkan sdl2)
+target_link_libraries(imgui PUBLIC Vulkan::Vulkan SDL2::SDL2)
 
 target_include_directories(stb_image INTERFACE stb_image)

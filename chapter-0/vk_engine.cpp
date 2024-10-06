@@ -1,8 +1,11 @@
 ﻿
 #include "vk_engine.h"
 
+#include <exception>
+#include <iostream>
 #include <SDL.h>
 #include <SDL_vulkan.h>
+#include <string>
 
 #include <vk_types.h>
 #include <vk_initializers.h>
@@ -13,7 +16,7 @@ void VulkanEngine::init()
 	SDL_Init(SDL_INIT_VIDEO);
 
 	SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_VULKAN);
-	
+
 	_window = SDL_CreateWindow(
 		"Vulkan Engine",
 		SDL_WINDOWPOS_UNDEFINED,
@@ -22,6 +25,12 @@ void VulkanEngine::init()
 		_windowExtent.height,
 		window_flags
 	);
+
+	if(!_window) {
+		std::string sdlError = SDL_GetError();
+		std::cout << "Failed to create window : " << sdlError << std::endl;
+		throw std::exception("Failed to create window\n");
+	}
 	
 	//everything went fine
 	_isInitialized = true;

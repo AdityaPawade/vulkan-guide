@@ -41,7 +41,7 @@ VertexInputDescription Vertex::get_vertex_description()
 	return description;
 }
 
-bool Mesh::load_from_obj(const char* filename)
+bool Mesh::load_from_obj(const char* filename, const char *mtl_basedir)
 {
 	//attrib will contain the vertex arrays of the file
 	tinyobj::attrib_t attrib;
@@ -56,7 +56,7 @@ bool Mesh::load_from_obj(const char* filename)
 
 	//load the OBJ file
 	tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, filename,
-		nullptr);
+		mtl_basedir);
 	//make sure to output the warnings to the console, in case there are issues with the file
 	if (!warn.empty()) {
 		std::cout << "WARN: " << warn << std::endl;

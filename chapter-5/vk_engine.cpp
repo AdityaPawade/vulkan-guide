@@ -798,10 +798,10 @@ void VulkanEngine::load_meshes()
 
 	//load the monkey
 	Mesh monkeyMesh{};
-	monkeyMesh.load_from_obj("../../assets/monkey_smooth.obj");
+	monkeyMesh.load_from_obj("../../assets/monkey_smooth.obj", "../../assets");
 
 	Mesh lostEmpire{};
-	lostEmpire.load_from_obj("../../assets/lost_empire.obj");
+	lostEmpire.load_from_obj("../../assets/lost_empire.obj", "../../assets");
 
 	upload_mesh(triMesh);
 	upload_mesh(monkeyMesh);

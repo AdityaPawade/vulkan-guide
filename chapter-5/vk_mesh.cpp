@@ -50,7 +50,7 @@ VertexInputDescription Vertex::get_vertex_description()
 	return description;
 }
 
-bool Mesh::load_from_obj(const char* filename)
+bool Mesh::load_from_obj(const char* filename, const char *mtl_basedir)
 {
 	//attrib will contain the vertex arrays of the file
 	tinyobj::attrib_t attrib;
@@ -65,12 +65,12 @@ bool Mesh::load_from_obj(const char* filename)
 
 	//load the OBJ file
 	tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, filename,
-		nullptr);
+		mtl_basedir);
 	//make sure to output the warnings to the console, in case there are issues with the file
 	if (!warn.empty()) {
 		std::cout << "WARN: " << warn << std::endl;
 	}
-	//if we have any error, print it to the console, and break the mesh loading. 
+	//if we have any error, print it to the console, and break the mesh loading.
 	//This happens if the file cant be found or is malformed
 	if (!err.empty()) {
 		std::cerr << err << std::endl;
@@ -100,10 +100,6 @@ bool Mesh::load_from_obj(const char* filename)
 				tinyobj::real_t ny = attrib.normals[3 * idx.normal_index + 1];
 				tinyobj::real_t nz = attrib.normals[3 * idx.normal_index + 2];
 
-				//vertex uv
-				tinyobj::real_t ux = attrib.texcoords[2 * idx.texcoord_index + 0];
-				tinyobj::real_t uy = attrib.texcoords[2 * idx.texcoord_index + 1];
-
 				//copy it into our vertex
 				Vertex new_vert;
 				new_vert.position.x = vx;
@@ -113,10 +109,6 @@ bool Mesh::load_from_obj(const char* filename)
 				new_vert.normal.x = nx;
 				new_vert.normal.y = ny;
 				new_vert.normal.z = nz;
-
-
-				new_vert.uv.x = ux;
-				new_vert.uv.y = 1-uy;
 
 				//we are setting the vertex color as the vertex normal. This is just for display purposes
 				new_vert.color = new_vert.normal;
